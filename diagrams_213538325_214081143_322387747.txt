@@ -1,0 +1,183 @@
+        ┌─────────────────────────────────────────────────────────────────────┐
+        │                     TURTLEBOT3 BURGER ROBOT SYSTEM                  │
+        └─────────────────────────────────────────────────────────────────────┘
+
+                                SENSOR LAYER
+                    ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐
+                    │  Camera  │  │  LiDAR   │  │   GPS    │  │   IMU    │
+                    │  640x480 │  │  360°    │  │  (x,y)   │  │  (yaw)   │
+                    │  RGB     │  │  LDS-01  │  │ Position │  │  Orient  │
+                    └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘
+                         │             │              │            │
+                         └─────────────┴──────────────┴────────────┘
+                                       │
+                              ┌────────▼──────────┐
+                              │  SENSOR FUSION    │
+                              │   & PROCESSING    │
+                              └────────┬──────────┘
+                                       │
+                         ┌─────────────┼─────────────┐
+                         │             │             │
+                    ┌────▼─────┐  ┌───▼────┐  ┌────▼─────┐
+                    │  YOLO    │  │ Lidar  │  │  Pose    │
+                    │ Person   │  │Obstacle│  │Estimation│
+                    │Detection │  │Sectors │  │  System  │
+                    └────┬─────┘  └───┬────┘  └────┬─────┘
+                         │            │             │
+                         └────────────┴─────────────┘
+                                      │
+                             ┌────────▼────────┐
+                             │ DECISION LAYER  │
+                             │  (FSM Control)  │
+                             └────────┬────────┘
+                                      │
+                        ┌─────────────┼─────────────┐
+                        │             │             │
+                    ┌───▼────┐  ┌────▼────┐  ┌─────▼─────┐
+                    │ Person │  │Navigation│ │  Metrics  │
+                    │Logging │  │ Control  │ │  Logger   │
+                    │ System │  │   FSM    │ │           │
+                    └────────┘  └────┬────┘  └───────────┘
+                                     │
+                            ┌────────┴────────┐
+                            │                 │
+                       ┌────▼────┐      ┌────▼────┐
+                       │  Left   │      │  Right  │
+                       │  Wheel  │      │  Wheel  │
+                       │  Motor  │      │  Motor  │
+                       └─────────┘      └─────────┘
+
+
+                        Navigation State Machine
+
+                            ┌──────────────┐
+                            │    START     │
+                            │  TURBO MODE  │
+                            └──────┬───────┘
+                                   │
+                                   ▼
+                      ┌────────────────────────┐
+                      │     TURBO MODE         │◄─────┐
+                      │  Linear: 0.8 m/s       │      │
+                      │  Angular: ~0.3 rad/s   │      │
+                      │  (Maximum Speed)       │      │
+                      └───┬────────────┬───────┘      │
+                          │            │              │
+                Front < 0.4m │        │ Front > 0.8m │
+                          │            │              │
+                          ▼            └──────────────┘
+                  ┌──────────────┐
+                  │  TURN MODE   │
+                  │ Linear: 0.0  │
+                  │ Angular: 3.5 │
+                  │ (Emergency)  │
+                  └───┬──────────┘
+                      │ Front > 0.5m
+                      ▼
+                  ┌──────────────┐
+                  │ CRUISE MODE  │
+                  │ Linear: 0.7  │
+                  │ Angular: ~1.5│
+                  │ (Navigate)   │
+                  └───┬──────────┘
+                      │
+                      │ Stuck Detected
+                      │ (Movement < 2cm/0.16s)
+                      ▼
+                  ┌──────────────┐
+                  │ RECOVERY     │
+                  │ MODE         │
+                  │ • Spin 15    │
+                  │   steps      │
+                  │ • Backup 15  │
+                  │   steps      │
+                  └───┬──────────┘
+                      │
+                      │ Recovery Complete
+                      └──────────────┐
+                                     │
+                                     ▼
+                            ┌────────────────┐
+                            │  Return to     │
+                            │  TURBO MODE    │
+                            └────────────────┘
+
+
+
+
+                        Person Detection Pipeline
+
+                            Camera Frame (640x480x4)
+                                 │
+                                 ▼
+                            Rotate 90° + BGR Conversion
+                                 │
+                                 ▼
+                            Resize to 320x240
+                            (Speed optimization)
+                                 │
+                                 ▼
+                        ┌─────────────────────┐
+                        │   YOLOv8n Model     │
+                        │   • FP16 precision  │
+                        │   • Conf > 0.45     │
+                        │   • Class: Person   │
+                        └─────────┬───────────┘
+                                  │
+                                  ▼
+                            Bounding Box [x1,y1,x2,y2]
+                                  │
+                                  ▼
+                            Calculate BBox Center
+                            bbox_center_x = (x1 + x2) / 2
+                                  │
+                                  ▼
+                            Angle Offset Calculation
+                            angle = (center/width - 0.5) × FOV
+                                  │
+                                  ▼
+                            LiDAR Ray Selection
+                            index = (angle + π) / (2π) × num_ranges
+                                  │
+                                  ▼
+                            Distance = ranges[index]
+                                  │
+                                  ▼
+                            World Coordinates Transform
+                            person_x = robot_x + distance × cos(yaw + angle)
+                            person_y = robot_y + distance × sin(yaw + angle)
+                                  │
+                                  ▼
+                            Duplicate Check
+                            (distance to existing < 0.6m?)
+                                  │
+                                  ├─ Yes → Ignore
+                                  │
+                                  └─ No → Log Person
+                                          │
+                                          ▼
+                                    Save to JSON
+                                    {person1: [x, y]}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

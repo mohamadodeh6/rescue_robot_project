@@ -1,0 +1,397 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "../protos/TurtleBot3Burger.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/devices/robotis/protos/RobotisLds01.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/plants/protos/PottedTree.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/appearances/protos/CementTiles.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/apartment_structure/protos/Window.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/apartment_structure/protos/Wall.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/appearances/protos/Roughcast.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/apartment_structure/protos/Radiator.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/cabinet/protos/Cabinet.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/factory/containers/protos/CardboardBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/kitchen/fridge/protos/Fridge.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/lights/protos/FloorLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/living_room_furniture/protos/Sofa.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/paintings/protos/LandscapePainting.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/tables/protos/Table.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/traffic/protos/DirectionPanel.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/plants/protos/BunchOfSunFlowers.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/humans/pedestrian/protos/Pedestrian.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/bedroom/protos/Bed.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/chairs/protos/OfficeChair.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/tables/protos/RoundTable.proto"
+
+WorldInfo {
+  info [
+    "Simple TurtleBot3 Burger simulation that can be controlled by a ROS."
+  ]
+  title "ROS2 simulation of the TurtleBot3 Burger robot"
+  basicTimeStep 20
+}
+Viewpoint {
+  orientation -0.03492968348710327 0.9696475791927348 0.24199894499183217 0.6003272377718464
+  position -122.62459467332673 -20.32645066771461 86.6176994644605
+  follow "TurtleBot3Burger:LDS-01"
+}
+TexturedBackground {
+  texture "empty_office"
+  skybox FALSE
+}
+TurtleBot3Burger {
+  translation 6.4434 -0.482219 -0.00015506
+  rotation -0.011463803126226253 -0.036517109958366045 -0.9992672725042944 0.0755632
+  controller "my_controller"
+  controllerArgs [
+    ""
+  ]
+  extensionSlot [
+    Solid {
+      name "imu_link"
+    }
+    GPS {
+    }
+    InertialUnit {
+      name "inertial_unit"
+    }
+    RobotisLds01 {
+    }
+  ]
+}
+PottedTree {
+  translation 7 -4 0
+  rotation 0 0 1 1.5708
+  name "potted tree(5)"
+}
+PottedTree {
+  translation 5.8 3.3 0
+  rotation 0 0 1 1.5708
+  name "potted tree(8)"
+}
+Floor {
+  translation 7.5 0 0
+  name "floor(1)"
+  size 50 50
+  tileSize 2 2
+  appearance CementTiles {
+    textureTransform TextureTransform {
+      scale 0.6 0.6
+    }
+  }
+}
+Pedestrian {
+  translation -11.8708 -23.2509 0.281795
+  rotation 0.684550266300716 0.684550266300716 -0.25056309747294764 -1.6378353071795866
+  name "pedestrian(1)"
+}
+Pedestrian {
+  translation -3.10596 -7.21864 0.483926
+  rotation -0.775629057564864 -0.6068950450419313 0.17343001287145576 1.46821
+  name "pedestrian(2)"
+}
+Pedestrian {
+  translation 6.94318 -18.1505 0.608094
+  rotation -0.754649664530754 -0.3183868584654517 0.573701744968691 1.57347
+  name "pedestrian(3)"
+}
+OfficeChair {
+  translation 3.7226692038878906e-08 7.1599999991407195 -0.0008845698502437938
+  rotation -0.007207743489346829 -0.9999740238781771 1.636520947187581e-06 0.0008739973119885286
+}
+OfficeChair {
+  translation 3.722669204213151e-08 10.929999999140714 -0.0008845698502437938
+  rotation -0.007207743489324016 -0.9999740238781776 1.636520945685907e-06 0.000873997311988531
+  name "office chair(1)"
+}
+OfficeChair {
+  translation -10.16999996277331 17.11999999914072 -0.0008845698502437938
+  rotation -0.007207743489371473 -0.999974023878177 1.6365209423950224e-06 0.0008739973119885465
+  name "office chair(5)"
+}
+OfficeChair {
+  translation -9.070000000859242 18.339999962773305 -0.000884569850243766
+  rotation -0.0004401370261731474 -0.0004338379208829936 -0.99999980903201 1.5707954967172795
+  name "office chair(6)"
+}
+OfficeChair {
+  translation -9.069999999140856 15.840000037226693 -0.0008845698502437105
+  rotation 0.0004338374862735234 -0.00044013541719154143 0.9999998090329066 1.570800192397426
+  name "office chair(7)"
+}
+OfficeChair {
+  translation -7.58000003722669 16.98000000085938 -0.0008845698502437938
+  rotation 0.00043698728637642497 -3.150353909771506e-06 0.999999904516089 3.141590001430568
+  name "office chair(8)"
+}
+OfficeChair {
+  translation -14.819999962773311 8.669999999140714 -0.0008845698502437938
+  rotation -0.007207743489332289 -0.9999740238781775 1.6365209493066247e-06 0.000873997311988542
+  name "office chair(4)"
+}
+RoundTable {
+  translation -8.9 17.12 0
+}
+Table {
+  translation 1.55 9.08 0
+  name "table(1)"
+}
+Table {
+  translation -13.97 8.55 0
+  name "table(2)"
+}
+OfficeChair {
+  translation 3.722669204213151e-08 9.659999999140714 -0.0008845698502437938
+  rotation -0.007207743489324016 -0.9999740238781776 1.636520945685907e-06 0.000873997311988531
+  name "office chair(2)"
+}
+OfficeChair {
+  translation 3.7226692042998874e-08 8.329999999140714 -0.0008845698502437938
+  rotation -0.007207743489320723 -0.9999740238781775 1.6365209358340229e-06 0.0008739973119885347
+  name "office chair(3)"
+}
+Pedestrian {
+  translation 6.73 2.57 0.33
+  rotation 0.9351130202419243 0.25056300542381216 0.25056300542381216 -1.6378353071795866
+}
+Pedestrian {
+  translation 17.79 14.2788 0.385947
+  rotation 0.44721412362140484 -0.7745972141184518 0.44721212362085194 -1.823475307179586
+  name "pedestrian(4)"
+}
+Pedestrian {
+  translation 26.72 -11.0782 0.545389
+  rotation 0.3582030312757826 0.8085590705977213 -0.4668220407596347 -2.030985307179586
+  name "pedestrian(5)"
+}
+Window {
+  translation 6.5 -5.1 0
+  rotation 0 0 1 -1.5707953071795862
+  name "window(1)"
+  size 0.2 1 2.4
+}
+Wall {
+  translation 7.5 5.1 0
+  rotation 0 0 1 3.14159
+  name "wall(5)"
+  size 5 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation 5.5 -5.1 0
+  name "wall(7)"
+  size 1 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation 8.5 -5.1 0
+  name "wall(10)"
+  size 3 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation 5.00005 -3.59 2.03958e-05
+  rotation 0 0.0002268199883307215 0.9999999742763461 -1.570565307179586
+  name "wall(1)"
+  size 3 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation 9.99004 0.001134 0.000337688
+  rotation 0 0.0002268199883307215 0.9999999742763461 -1.570565307179586
+  name "wall(3)"
+  size 10 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation -1.89187 7.95839 -0.00416174
+  rotation 0 0.0002268199883307215 0.9999999742763461 -1.570565307179586
+  name "wall(4)"
+  size 30 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation 20.3519 -9.06655 0.00474432
+  rotation 0 0.0002268199883307215 0.9999999742763461 -1.570565307179586
+  name "wall(12)"
+  size 30 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation 4.99841 3.45 -0.00157639
+  rotation 0 0.0002268199883307215 0.9999999742763461 -1.570565307179586
+  name "wall(2)"
+  size 3 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation 7.95385 23.12 -0.0053667
+  rotation -0.00011339699854184166 0.00011339699854184166 0.9999999871411206 -3.141365307179586
+  name "wall(6)"
+  size 50 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation 7.96469 -24.51 0.00543675
+  rotation -0.00011339699854184166 0.00011339699854184166 0.9999999871411206 -3.141365307179586
+  name "wall(9)"
+  size 50 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation -7.00364 11.9169 -0.00621885
+  rotation -0.00011339699854184166 0.00011339699854184166 0.9999999871411206 -3.141365307179586
+  name "wall(13)"
+  size 10 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation 26.0752 15.4446 0.000484232
+  rotation -0.00011339699854184166 0.00011339699854184166 0.9999999871411206 -3.141365307179586
+  name "wall(14)"
+  size 10 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation -17.0311 0.255 -0.00584865
+  rotation 5.437889860117593e-13 -0.00022681999416536053 -0.9999999742763448 1.57057
+  name "wall(8)"
+  size 50 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Wall {
+  translation 31.9489 0.266084 0.00525852
+  rotation 5.437889860117593e-13 -0.00022681999416536053 -0.9999999742763448 1.57057
+  name "wall(11)"
+  size 50 0.2 2.4
+  appearance Roughcast {
+    textureTransform TextureTransform {
+      scale 7 2.4
+    }
+  }
+}
+Radiator {
+  translation 7.33 4.87 0.38
+  rotation 0.0002336949872371335 0 0.9999999726933261 -1.5710253071795863
+}
+Cabinet {
+  translation 9.5 -2.5 0
+  rotation 0.00011300299708654554 0.00011407199705898447 0.999999987108951 3.14137
+}
+CardboardBox {
+  translation 9.7 4.7 0.3
+  rotation -0.577349935856137 0.577349935856137 0.5773509358560258 2.09439
+}
+CardboardBox {
+  translation 9 4.6 0.3
+  rotation 0.06500310682387538 0.06496520681989673 -0.995768104533426 -1.5750353071795864
+  name "cardboard box(1)"
+}
+CardboardBox {
+  translation 9.6 4 0.3
+  rotation -0.06496610766674145 -0.06500200767097807 -0.9957681175119917 -1.5750353071795864
+  name "cardboard box(2)"
+}
+CardboardBox {
+  translation 9.4 4.5 0.9
+  rotation -0.06512832729035975 -0.027078811346683294 -0.997509417980808 -2.358005307179586
+  name "cardboard box(3)"
+}
+Fridge {
+  translation 5.7 4.64 0
+  rotation 0.5822796992968663 -0.5748877031142695 0.5748517031328608 -0.0003953071795859131
+}
+FloorLight {
+  translation 8.84 1 0
+  name "floor light(1)"
+  bulbColor 0.26331 0.374105 0.963333
+  pointLightColor 0.0350805 0.179232 0.956664
+  pointLightIntensity 4
+  pointLightCastShadows TRUE
+}
+Sofa {
+  translation 9 -0.518 0
+  rotation 0.00014495699695408652 0 0.9999999894937345 3.14131
+}
+LandscapePainting {
+  translation 8.5 -4.98 1.2
+  rotation -0.00014498499390527302 -0.00014496999390590354 -0.9999999789815259 -1.570515307179586
+}
+PottedTree {
+  translation 9.17 -1.7 0
+  rotation 0 0 1 1.5708
+}
+PottedTree {
+  translation 5.6 -4.5 0
+  rotation 0 0 1 1.5708
+  name "potted tree(3)"
+}
+Table {
+  translation 7.7 -0.52 0
+  rotation 0 0.00022690898831680196 0.9999999742561552 -1.570565307179586
+  size 1.3 0.8 0.5
+}
+DirectionPanel {
+  translation 8 5 1.5
+  rotation 0.00010265399783649644 -0.00010265399783649644 0.9999999894621566 1.5708
+}
+BunchOfSunFlowers {
+  translation 7.68 -0.52 0.5
+  rotation 0 0 1 1.5708
+}
+Bed {
+  translation 27.96 -22.49 0
+}
